@@ -188,3 +188,73 @@ button:active {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
 }
+/* Why Choose Section */
+
+.why-us {
+  margin: 80px auto 40px;
+  text-align: center;
+  max-width: 1100px;
+}
+
+.why-us h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.why-subtitle {
+  color: #64748b;
+  font-size: 17px;
+  margin-bottom: 35px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.feature {
+  background: white;
+  padding: 28px 20px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.feature-icon {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.feature h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .why-us h2 {
+    font-size: 29px;
+  }
+}
