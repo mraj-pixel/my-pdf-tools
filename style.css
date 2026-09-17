@@ -258,3 +258,20 @@ button:active {
     font-size: 29px;
   }
 }
+.footer {
+  margin-top: 70px;
+  padding: 30px 20px;
+  text-align: center;
+  background: #111827;
+  color: white;
+  border-radius: 18px 18px 0 0;
+}
+
+.footer p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.footer p:last-child {
+  color: #9ca3af;
+}
