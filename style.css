@@ -1,72 +1,108 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  min-height: 100vh;
+  padding: 60px 20px;
+  color: #111827;
 }
 
 .container {
-    width: 90%;
-    max-width: 1000px;
-    text-align: center;
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
 }
 
 h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
+  font-size: 48px;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .container > p {
-    color: #666;
-    margin-bottom: 40px;
+  color: #64748b;
+  font-size: 19px;
+  margin-bottom: 45px;
 }
 
 .tools {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
 
 .tool {
-    background: white;
-    padding: 30px 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tool:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
 }
 
 .tool h2 {
-    margin-bottom: 15px;
+  font-size: 28px;
+  margin-bottom: 15px;
 }
 
 .tool p {
-    color: #666;
-    margin-bottom: 25px;
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 28px;
 }
 
 button {
-    border: none;
-    padding: 12px 22px;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #222;
-    color: white;
-    font-size: 15px;
+  border: none;
+  padding: 13px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 button:hover {
-    opacity: 0.8;
+  opacity: 0.9;
+  transform: scale(1.04);
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 @media (max-width: 700px) {
-    .tools {
-        grid-template-columns: 1fr;
-    }
+  body {
+    padding: 40px 15px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .container > p {
+    font-size: 17px;
+    margin-bottom: 30px;
+  }
+
+  .tools {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tool {
+    padding: 30px 20px;
+  }
 }
