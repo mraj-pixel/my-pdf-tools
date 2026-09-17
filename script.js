@@ -1,167 +1,229 @@
+// Load required libraries
 function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
 }
 
-// PDF to Excel
-const pdfInput = document.createElement("input");
-pdfInput.type = "file";
-pdfInput.accept = ".pdf";
+async function loadLibraries() {
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js");
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js");
 
-document.querySelectorAll(".tool button")[0].addEventListener("click", () => {
-  pdfInput.click();
-});
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
 
-pdfInput.addEventListener("change", async () => {
-  if (!pdfInput.files.length) return;
+loadLibraries().then(() => {
+    console.log("Libraries loaded successfully");
 
-  try {
-    await loadScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs"
-    );
+    const buttons = document.querySelectorAll(".tool button");
 
-    const pdfjsLib = globalThis.pdfjsLib;
+    // -------------------------------
+    // 1. PDF TO EXCEL
+    // -------------------------------
+    buttons[0].addEventListener("click", async () => {
 
-    if (!pdfjsLib) {
-      alert("PDF library load nohoi. Internet connection check kora.");
-      return;
-    }
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".pdf";
 
-    const file = pdfInput.files[0];
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        input.onchange = async () => {
+            const file = input.files[0];
 
-    let csv = "Page,Text\n";
+            if (!file) return;
 
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-      const page = await pdf.getPage(pageNum);
-      const content = await page.getTextContent();
+            try {
+                alert("Reading PDF... Please wait.");
 
-      const text = content.items
-        .map(item => item.str)
-        .join(" ")
-        .replace(/"/g, '""');
+                const arrayBuffer = await file.arrayBuffer();
 
-      csv += `${pageNum},"${text}"\n`;
-    }
+                const pdf = await pdfjsLib.getDocument({
+                    data: arrayBuffer
+                }).promise;
 
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;"
+                const rows = [];
+
+                for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+
+                    const page = await pdf.getPage(pageNumber);
+                    const textContent = await page.getTextContent();
+
+                    let pageText = "";
+
+                    textContent.items.forEach(item => {
+                        pageText += item.str + " ";
+                    });
+
+                    rows.push([`Page ${pageNumber}`]);
+                    rows.push([pageText.trim()]);
+                    rows.push([""]);
+                }
+
+                const worksheet = XLSX.utils.aoa_to_sheet(rows);
+                const workbook = XLSX.utils.book_new();
+
+                XLSX.utils.book_append_sheet(
+                    workbook,
+                    worksheet,
+                    "PDF Data"
+                );
+
+                XLSX.writeFile(workbook, "converted-pdf.xlsx");
+
+                alert("PDF converted to Excel successfully!");
+
+            } catch (error) {
+                console.error(error);
+                alert("Could not convert this PDF.");
+            }
+        };
+
+        input.click();
     });
 
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = file.name.replace(/\.pdf$/i, "") + ".csv";
-    a.click();
 
-    URL.revokeObjectURL(url);
+    // -------------------------------
+    // 2. IMAGE TO PDF
+    // -------------------------------
+    buttons[1].addEventListener("click", () => {
 
-    alert("PDF converted successfully! Excel/CSV file download hoi gol.");
-  } catch (error) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+
+        input.onchange = () => {
+
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                const image = new Image();
+
+                image.onload = function() {
+
+                    const { jsPDF } = window.jspdf;
+
+                    const pdf = new jsPDF({
+                        orientation: image.width > image.height
+                            ? "landscape"
+                            : "portrait",
+                        unit: "px",
+                        format: [image.width, image.height]
+                    });
+
+                    pdf.addImage(
+                        image,
+                        "JPEG",
+                        0,
+                        0,
+                        image.width,
+                        image.height
+                    );
+
+                    pdf.save("image-to-pdf.pdf");
+
+                    alert("Image converted to PDF successfully!");
+                };
+
+                image.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+        input.click();
+    });
+
+
+    // -------------------------------
+    // 3. RESIZE IMAGE
+    // -------------------------------
+    buttons[2].addEventListener("click", () => {
+
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+
+        input.onchange = () => {
+
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                const image = new Image();
+
+                image.onload = function() {
+
+                    const newWidth = prompt(
+                        `Current width: ${image.width}px\n\nEnter new width in pixels:`,
+                        image.width
+                    );
+
+                    if (!newWidth || isNaN(newWidth)) {
+                        return;
+                    }
+
+                    const width = Number(newWidth);
+
+                    const height =
+                        Math.round(image.height * (width / image.width));
+
+                    const canvas = document.createElement("canvas");
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext("2d");
+
+                    ctx.drawImage(
+                        image,
+                        0,
+                        0,
+                        width,
+                        height
+                    );
+
+                    canvas.toBlob(blob => {
+
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+
+                        link.href = url;
+                        link.download = "resized-image.jpg";
+
+                        link.click();
+
+                        URL.revokeObjectURL(url);
+
+                        alert("Image resized successfully!");
+
+                    }, "image/jpeg", 0.9);
+                };
+
+                image.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+        input.click();
+    });
+
+}).catch(error => {
     console.error(error);
-    alert("PDF convert koribo nuwarilu. PDF-tu check kora.");
-  }
-});
-
-
-// Image to PDF
-const imageInput = document.createElement("input");
-imageInput.type = "file";
-imageInput.accept = "image/*";
-
-document.querySelectorAll(".tool button")[1].addEventListener("click", () => {
-  imageInput.click();
-});
-
-imageInput.addEventListener("change", async () => {
-  if (!imageInput.files.length) return;
-
-  try {
-    await loadScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-    );
-
-    const { jsPDF } = window.jspdf;
-
-    const file = imageInput.files[0];
-    const imageURL = URL.createObjectURL(file);
-
-    const img = new Image();
-
-    img.onload = () => {
-      const pdf = new jsPDF({
-        orientation: img.width > img.height ? "landscape" : "portrait",
-        unit: "px",
-        format: [img.width, img.height]
-      });
-
-      pdf.addImage(img, "JPEG", 0, 0, img.width, img.height);
-      pdf.save(file.name.replace(/\.[^/.]+$/, "") + ".pdf");
-
-      URL.revokeObjectURL(imageURL);
-
-      alert("Image PDF successfully created!");
-    };
-
-    img.src = imageURL;
-  } catch (error) {
-    console.error(error);
-    alert("Image to PDF failed.");
-  }
-});
-
-
-// Resize Image
-const resizeInput = document.createElement("input");
-resizeInput.type = "file";
-resizeInput.accept = "image/*";
-
-document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
-  resizeInput.click();
-});
-
-resizeInput.addEventListener("change", () => {
-  if (!resizeInput.files.length) return;
-
-  const file = resizeInput.files[0];
-
-  const width = prompt("Enter new width in pixels:", "800");
-
-  if (!width || isNaN(width)) return;
-
-  const img = new Image();
-  const url = URL.createObjectURL(file);
-
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    const ratio = img.height / img.width;
-
-    canvas.width = Number(width);
-    canvas.height = Math.round(Number(width) * ratio);
-
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-    canvas.toBlob(blob => {
-      const downloadURL = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-
-      a.href = downloadURL;
-      a.download = "resized-" + file.name;
-      a.click();
-
-      URL.revokeObjectURL(downloadURL);
-      URL.revokeObjectURL(url);
-
-      alert("Image resized successfully!");
-    }, "image/jpeg", 0.9);
-  };
-
-  img.src = url;
+    alert("Some tools could not be loaded.");
 });
