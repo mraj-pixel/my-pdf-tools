@@ -214,11 +214,9 @@ document.querySelectorAll(".tool button")[1].addEventListener("click", async () 
 // ================================
 // 3. RESIZE IMAGE
 // ================================
-
 document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
 
     const input = document.createElement("input");
-
     input.type = "file";
     input.accept = "image/*";
 
@@ -236,41 +234,39 @@ document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
 
             image.onload = function() {
 
-                const originalWidth = image.width;
-                const originalHeight = image.height;
-
                 const newWidth = prompt(
                     "Enter new width in pixels:",
-                    originalWidth
+                    image.width
                 );
 
-                if (!newWidth || isNaN(newWidth) || Number(newWidth) <= 0) {
+                if (!newWidth || isNaN(newWidth)) {
                     alert("Please enter a valid width.");
                     return;
                 }
 
-                const width = Number(newWidth);
-
                 const newHeight = prompt(
-                    "Enter new height in pixels (Cancel = keep ratio):",
-                    Math.round(originalHeight * (width / originalWidth))
+                    "Enter new height in pixels:",
+                    image.height
                 );
 
-                let height;
-
-                if (newHeight === null || newHeight === "") {
-                    height = Math.round(
-                        originalHeight * (width / originalWidth)
-                    );
-                } else {
-
-                    if (isNaN(newHeight) || Number(newHeight) <= 0) {
-                        alert("Please enter a valid height.");
-                        return;
-                    }
-
-                    height = Number(newHeight);
+                if (!newHeight || isNaN(newHeight)) {
+                    alert("Please enter a valid height.");
+                    return;
                 }
+
+                const targetKB = prompt(
+                    "Enter target file size in KB (example: 200):",
+                    "200"
+                );
+
+                if (!targetKB || isNaN(targetKB)) {
+                    alert("Please enter a valid file size.");
+                    return;
+                }
+
+                const width = Number(newWidth);
+                const height = Number(newHeight);
+                const targetBytes = Number(targetKB) * 1024;
 
                 const canvas = document.createElement("canvas");
 
@@ -287,54 +283,61 @@ document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
                     height
                 );
 
-                const quality = prompt(
-                    "Enter image quality (1-100):",
-                    "85"
-                );
+                let quality = 0.9;
 
-                let imageQuality = Number(quality);
+                function compressImage() {
 
-                if (isNaN(imageQuality) || imageQuality < 1 || imageQuality > 100) {
-                    imageQuality = 85;
+                    canvas.toBlob(function(blob) {
+
+                        if (!blob) {
+                            alert("Image resize failed.");
+                            return;
+                        }
+
+                        if (blob.size > targetBytes && quality > 0.1) {
+
+                            quality -= 0.05;
+                            compressImage();
+                            return;
+                        }
+
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+
+                        link.href = url;
+                        link.download = "resized-image.jpg";
+
+                        document.body.appendChild(link);
+
+                        link.click();
+
+                        document.body.removeChild(link);
+
+                        URL.revokeObjectURL(url);
+
+                        alert(
+                            "Image resized successfully!\n\n" +
+                            "Width: " + width + " px\n" +
+                            "Height: " + height + " px\n" +
+                            "Approx. size: " +
+                            (blob.size / 1024).toFixed(1) + " KB"
+                        );
+
+                    }, "image/jpeg", quality);
                 }
 
-                canvas.toBlob((blob) => {
-
-                    const url = URL.createObjectURL(blob);
-
-                    const link = document.createElement("a");
-
-                    link.href = url;
-
-                    link.download = "resized-image.jpg";
-
-                    link.click();
-
-                    URL.revokeObjectURL(url);
-
-                    const sizeKB = (blob.size / 1024).toFixed(2);
-                    const sizeMB = (blob.size / (1024 * 1024)).toFixed(2);
-
-                    alert(
-                        "Image resized successfully!\n\n" +
-                        "Width: " + width + " px\n" +
-                        "Height: " + height + " px\n" +
-                        "Size: " + sizeKB + " KB (" + sizeMB + " MB)"
-                    );
-
-                }, "image/jpeg", imageQuality / 100);
+                compressImage();
 
             };
 
             image.src = event.target.result;
-
         };
 
         reader.readAsDataURL(file);
-
     };
 
     input.click();
-
 });
+
 console.log("My PDF Tools is ready!");
