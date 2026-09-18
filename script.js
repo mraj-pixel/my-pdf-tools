@@ -222,57 +222,62 @@ document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
     input.type = "file";
     input.accept = "image/*";
 
-
     input.onchange = () => {
 
         const file = input.files[0];
 
         if (!file) return;
 
-
         const reader = new FileReader();
-
 
         reader.onload = function(event) {
 
             const image = new Image();
 
-
             image.onload = function() {
 
+                const originalWidth = image.width;
+                const originalHeight = image.height;
 
                 const newWidth = prompt(
                     "Enter new width in pixels:",
-                    image.width
+                    originalWidth
                 );
 
-
-                if (!newWidth || isNaN(newWidth)) {
-
+                if (!newWidth || isNaN(newWidth) || Number(newWidth) <= 0) {
                     alert("Please enter a valid width.");
-
                     return;
-
                 }
-
 
                 const width = Number(newWidth);
 
-
-                const height = Math.round(
-                    image.height * (width / image.width)
+                const newHeight = prompt(
+                    "Enter new height in pixels (Cancel = keep ratio):",
+                    Math.round(originalHeight * (width / originalWidth))
                 );
 
+                let height;
+
+                if (newHeight === null || newHeight === "") {
+                    height = Math.round(
+                        originalHeight * (width / originalWidth)
+                    );
+                } else {
+
+                    if (isNaN(newHeight) || Number(newHeight) <= 0) {
+                        alert("Please enter a valid height.");
+                        return;
+                    }
+
+                    height = Number(newHeight);
+                }
 
                 const canvas = document.createElement("canvas");
 
                 canvas.width = width;
-
                 canvas.height = height;
 
-
                 const ctx = canvas.getContext("2d");
-
 
                 ctx.drawImage(
                     image,
@@ -282,11 +287,20 @@ document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
                     height
                 );
 
+                const quality = prompt(
+                    "Enter image quality (1-100):",
+                    "85"
+                );
+
+                let imageQuality = Number(quality);
+
+                if (isNaN(imageQuality) || imageQuality < 1 || imageQuality > 100) {
+                    imageQuality = 85;
+                }
 
                 canvas.toBlob((blob) => {
 
                     const url = URL.createObjectURL(blob);
-
 
                     const link = document.createElement("a");
 
@@ -296,30 +310,31 @@ document.querySelectorAll(".tool button")[2].addEventListener("click", () => {
 
                     link.click();
 
-
                     URL.revokeObjectURL(url);
 
+                    const sizeKB = (blob.size / 1024).toFixed(2);
+                    const sizeMB = (blob.size / (1024 * 1024)).toFixed(2);
 
-                    alert("Image resized successfully!");
+                    alert(
+                        "Image resized successfully!\n\n" +
+                        "Width: " + width + " px\n" +
+                        "Height: " + height + " px\n" +
+                        "Size: " + sizeKB + " KB (" + sizeMB + " MB)"
+                    );
 
-                }, "image/jpeg", 0.9);
+                }, "image/jpeg", imageQuality / 100);
 
             };
-
 
             image.src = event.target.result;
 
         };
 
-
         reader.readAsDataURL(file);
 
     };
 
-
     input.click();
 
 });
-
-
 console.log("My PDF Tools is ready!");
