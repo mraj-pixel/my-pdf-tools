@@ -36,8 +36,16 @@
                 <div class="tool">
                       <h3>Resize Image</h3>
 
-    <input type="file" id="resizeInput" accept="image/*">
+   <button type="button" onclick="document.getElementById('resizeInput').click()">
+    Choose Image
+</button>
 
+<input
+    type="file"
+    id="resizeInput"
+    accept="image/*"
+    style="display:none;"
+>
     <div id="resizeControls" style="display:none; margin-top:15px;">
 
         <label>
