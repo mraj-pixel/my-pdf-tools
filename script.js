@@ -214,7 +214,7 @@ document.querySelectorAll(".tool button")[1].addEventListener("click", async () 
 // ================================
 // 3. RESIZE IMAGE
 // ================================
-// 3. RESIZE IMAGE
+
 const resizeInput = document.getElementById("resizeInput");
 const resizeControls = document.getElementById("resizeControls");
 const resizeWidth = document.getElementById("resizeWidth");
