@@ -33,9 +33,78 @@
             </div>
 
             <div class="tool">
-                <h2>📐 Resize Image</h2>
-                <p>Resize your images easily.</p>
-                <button>Choose Image</button>
+                <div class="tool">
+    <h3>Resize Image</h3>
+
+    <input type="file" id="resizeInput" accept="image/*">
+
+    <div id="resizeControls" style="display:none; margin-top:15px;">
+
+        <label>
+            Width (px)
+            <input type="number" id="resizeWidth" min="1">
+        </label>
+
+        <label>
+            Height (px)
+            <input type="number" id="resizeHeight" min="1">
+        </label>
+
+        <label style="display:block; margin:10px 0;">
+            <input type="checkbox" id="keepRatio" checked>
+            Keep Aspect Ratio
+        </label>
+
+        <div style="margin-top:10px;">
+            <label>Target File Size</label>
+            <div style="display:flex; gap:8px;">
+                <input
+                    type="number"
+                    id="targetSize"
+                    min="1"
+                    placeholder="Example: 100"
+                >
+
+                <select id="targetUnit">
+                    <option value="KB">KB</option>
+                    <option value="MB">MB</option>
+                </select>
+            </div>
+        </div>
+
+        <label style="display:block; margin-top:10px;">
+            Output Format
+
+            <select id="outputFormat">
+                <option value="image/jpeg">JPG</option>
+                <option value="image/png">PNG</option>
+                <option value="image/webp">WebP</option>
+            </select>
+        </label>
+
+        <label style="display:block; margin-top:10px;">
+            Quality:
+            <span id="qualityValue">85</span>%
+
+            <input
+                type="range"
+                id="quality"
+                min="10"
+                max="100"
+                value="85"
+            >
+        </label>
+
+        <div id="resizeInfo" style="margin-top:12px;"></div>
+
+        <button id="resizeBtn" type="button">
+            Resize & Download
+        </button>
+
+    </div>
+
+    <div id="resizeStatus" style="margin-top:10px;"></div>
+</div>
             </div>
         </div>
     </div>
