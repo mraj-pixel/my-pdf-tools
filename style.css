@@ -275,3 +275,45 @@ button:active {
 .footer p:last-child {
   color: #9ca3af;
 }
+@media (max-width: 768px) {
+
+  .tools {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .tool {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 100%;
+    margin: auto;
+  }
+
+  .header {
+    padding: 15px;
+  }
+
+  .header nav {
+    gap: 12px;
+  }
+
+  .why-us {
+    width: 90%;
+    margin: auto;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
