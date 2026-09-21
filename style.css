@@ -317,3 +317,19 @@ button:active {
     box-sizing: border-box;
   }
 }
+@media (max-width: 768px) {
+
+  .tools,
+  .tool-grid,
+  .tools-grid,
+  .tools-container {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+
+  .tool {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+}
