@@ -333,3 +333,36 @@ button:active {
   }
 
 }
+/* Final Design Polish */
+.tool {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.tool button {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.tool button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+nav a {
+  transition: opacity 0.2s ease;
+}
+
+nav a:hover {
+  opacity: 0.7;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 15px;
+  margin-top: 40px;
+  font-size: 14px;
+}
