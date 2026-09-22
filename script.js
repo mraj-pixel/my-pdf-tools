@@ -101,7 +101,7 @@ document.querySelectorAll(".tool button")[0].addEventListener("click", async () 
 
             console.error(error);
 
-            alert("PDF conversion failed. Please try another PDF.");
+           alert("PDF conversion failed: " + error.message);
 
         }
 
