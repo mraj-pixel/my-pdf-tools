@@ -374,3 +374,58 @@ button:active {
   }
 }
 ```
+@media (max-width: 600px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .header,
+  .container,
+  .why-us,
+  .footer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tool,
+  .feature {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .tool h2,
+  .tool p,
+  .feature h3,
+  .feature p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  #resizeControls {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  #resizeControls input,
+  #resizeControls select {
+    max-width: 100%;
+  }
+
+  #resizeControls > div {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #resizeControls > div > div {
+    width: 100%;
+    max-width: 100%;
+  }
+}
