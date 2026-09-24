@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mraj-pixel.github.io/my-pdf-tools/sitemap.xml
