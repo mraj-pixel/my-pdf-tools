@@ -1723,3 +1723,32 @@ footer {
 
 
 <div class="sr-only mt-n1" id="screenReaderAnnouncementDiv" role="alert" data-testid="screenReaderAnnouncement" aria-live="assertive"></div></body></html>
+/* Target file size mobile fix */
+.target-size-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.target-size-row input {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.target-size-row select {
+    width: 80px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .target-size-row {
+        gap: 6px;
+    }
+
+    .target-size-row select {
+        width: 75px;
+    }
+}
