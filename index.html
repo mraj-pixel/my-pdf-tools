@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Your Converter - Free PDF, Image & File Tools</title>
-<meta name="description" content="Your Converter offers free online tools to convert PDF to Excel, images to PDF, and resize images. Fast, simple, and mobile-friendly file tools.">
+
+    <meta name="description" content="Your Converter offers free online tools to convert PDF to Excel, images to PDF, and resize images. Fast, simple, and mobile-friendly file tools.">
+
     <meta property="og:title" content="Your Converter - Free PDF, Image & File Tools">
-<meta property="og:description" content="Free online tools to convert PDF to Excel, images to PDF, and resize images.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mraj-pixel.github.io/my-pdf-tools/">
+    <meta property="og:description" content="Free online tools to convert PDF to Excel, images to PDF, and resize images.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mraj-pixel.github.io/my-pdf-tools/">
+
     <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="hF-xhtBtHwYRoxxq0-tttqlMLjrfUIo-cii103j8GU0" />
+
+    <meta name="google-site-verification" content="hF-xhtBtHwYRoxxq0-tttqlMLjrfUIo-cii103j8GU0">
+
     <link rel="stylesheet" href="style.css">
+
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -49,172 +56,302 @@ body {
 }
 </style>
 </head>
+
 <body>
+
 <header class="header">
-  <div class="logo">⚡ Your Converter</div>
-  <nav>
-    <a href="#tools">Tools</a>
-    <a href="#about">About</a>
-  </nav>
+    <div class="logo">⚡ Your Converter</div>
+
+    <nav>
+        <a href="#tools">Tools</a>
+        <a href="#about">About</a>
+    </nav>
 </header>
-    <div class="container">
-       <h1>Your Converter</h1>
-        <p>Simple, fast & free file conversion tools</p>
 
-        <div class="tools" id="tools">
-            <div class="tool">
-                <h2>📄 PDF to Excel</h2>
-                <p>Convert PDF files into Excel quickly and easily.</p>
-                <button>Choose PDF</button>
-            </div>
+<div class="container">
 
-            <div class="tool">
-                <h2>🖼️ Image to PDF</h2>
-                <p>Convert JPG, PNG and other images into PDF files.</p>
-                <button>Choose Image</button>
-            </div>
+    <h1>Your Converter</h1>
+    <p>Simple, fast & free file conversion tools</p>
 
-            
-                <div class="tool">
-                     <h2>📐 Image Resizer</h2>
-<p>Resize images by width, height, quality and file size.</p>
+    <!-- TOOLS -->
+    <div class="tools" id="tools">
 
-   <button type="button" onclick="document.getElementById('resizeInput').click()">
-    Choose Image
-</button>
-
-<input
-    type="file"
-    id="resizeInput"
-    accept="image/*"
-    style="display:none;"
->
-    <div id="resizeControls" style="display:none; margin-top:15px;">
-
-        <label>
-            Width (px)
-            <input type="number" id="resizeWidth" min="1">
-        </label>
-
-        <label>
-            Height (px)
-            <input type="number" id="resizeHeight" min="1">
-        </label>
-
-        <label style="display:block; margin:10px 0;">
-            <input type="checkbox" id="keepRatio" checked>
-            Keep Aspect Ratio
-        </label>
-
-        <div style="margin-top:10px;">
-            <label>Target File Size</label>
-           <div class="target-size-row">
-    <input
-        type="number"
-        id="targetSize"
-        min="1"
-        placeholder="Example: 100"
-    >
-
-    <select id="targetUnit">
-        <option value="KB">KB</option>
-        <option value="MB">MB</option>
-    </select>
-</div>
+        <div class="tool">
+            <h2>📄 PDF to Excel</h2>
+            <p>Convert PDF files into Excel quickly and easily.</p>
+            <button>Choose PDF</button>
         </div>
 
-        <label style="display:block; margin-top:10px;">
-            Output Format
+        <div class="tool">
+            <h2>🖼️ Image to PDF</h2>
+            <p>Convert JPG, PNG and other images into PDF files.</p>
+            <button>Choose Image</button>
+        </div>
 
-            <select id="outputFormat">
-                <option value="image/jpeg">JPG</option>
-                <option value="image/png">PNG</option>
-                <option value="image/webp">WebP</option>
-            </select>
-        </label>
+        <div class="tool">
 
-        <label style="display:block; margin-top:10px;">
-            Quality:
-            <span id="qualityValue">85</span>%
+            <h2>📐 Image Resizer</h2>
+
+            <p>Resize images by width, height, quality and file size.</p>
+
+            <button
+                type="button"
+                onclick="document.getElementById('resizeInput').click()">
+                Choose Image
+            </button>
 
             <input
-                type="range"
-                id="quality"
-                min="10"
-                max="100"
-                value="85"
+                type="file"
+                id="resizeInput"
+                accept="image/*"
+                style="display:none;"
             >
-        </label>
 
-        <div id="resizeInfo" style="margin-top:12px;"></div>
+            <div id="resizeControls" style="display:none; margin-top:15px;">
 
-        <button id="resizeBtn" type="button">
-            Resize & Download
-        </button>
+                <label>
+                    Width (px)
+                    <input type="number" id="resizeWidth" min="1">
+                </label>
 
-    </div>
+                <label>
+                    Height (px)
+                    <input type="number" id="resizeHeight" min="1">
+                </label>
 
-    <div id="resizeStatus" style="margin-top:10px;"></div>
-</div>
+                <label style="display:block; margin:10px 0;">
+                    <input type="checkbox" id="keepRatio" checked>
+                    Keep Aspect Ratio
+                </label>
+
+                <div style="margin-top:10px;">
+                    <label>Target File Size</label>
+
+                    <div class="target-size-row">
+
+                        <input
+                            type="number"
+                            id="targetSize"
+                            min="1"
+                            placeholder="Example: 100"
+                        >
+
+                        <select id="targetUnit">
+                            <option value="KB">KB</option>
+                            <option value="MB">MB</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <label style="display:block; margin-top:10px;">
+                    Output Format
+
+                    <select id="outputFormat">
+                        <option value="image/jpeg">JPG</option>
+                        <option value="image/png">PNG</option>
+                        <option value="image/webp">WebP</option>
+                    </select>
+                </label>
+
+                <label style="display:block; margin-top:10px;">
+                    Quality:
+                    <span id="qualityValue">85</span>%
+
+                    <input
+                        type="range"
+                        id="quality"
+                        min="10"
+                        max="100"
+                        value="85"
+                    >
+                </label>
+
+                <div id="resizeInfo" style="margin-top:12px;"></div>
+
+                <button id="resizeBtn" type="button">
+                    Resize & Download
+                </button>
+
             </div>
+
+            <div id="resizeStatus" style="margin-top:10px;"></div>
+
         </div>
+
     </div>
+
+</div>
+
 <script src="script.js"></script>
+
+
+<!-- WHY CHOOSE YOUR CONVERTER -->
 <section class="why-us" id="about">
-  <h2>Why Choose Your Converter?</h2>
-  <p class="why-subtitle">Simple tools made for everyday file conversion.</p>
 
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h3>Fast & Easy</h3>
-      <p>Convert your files quickly with just a few clicks.</p>
+    <h2>Why Choose Your Converter?</h2>
+
+    <p class="why-subtitle">
+        Simple tools made for everyday file conversion.
+    </p>
+
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast & Easy</h3>
+            <p>Convert your files quickly with just a few clicks.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacy Focused</h3>
+            <p>Your files are handled with privacy in mind.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📱</div>
+            <h3>Mobile Friendly</h3>
+            <p>Use Your Converter comfortably on phone or laptop.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🆓</div>
+            <h3>Free to Use</h3>
+            <p>Access our basic conversion tools without a fee.</p>
+        </div>
+
     </div>
 
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <h3>Privacy Focused</h3>
-      <p>Your files are handled with privacy in mind.</p>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon">📱</div>
-      <h3>Mobile Friendly</h3>
-      <p>Use Your Converter comfortably on phone or laptop.</p>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon">🆓</div>
-      <h3>Free to Use</h3>
-      <p>Access our basic conversion tools without a fee.</p>
-    </div>
-  </div>
 </section>
-    <section class="why-us">
-  <h2>Free Online PDF & Image Tools</h2>
-  <p>
-    Your Converter provides simple and free online tools for everyday file tasks.
-    Convert PDF files to Excel, turn JPG and PNG images into PDF files, and resize
-    images by width, height, quality, or target file size.
-  </p>
+
+
+<!-- ABOUT / CONTENT -->
+<section class="why-us">
+
+    <h2>Free Online PDF & Image Tools</h2>
+
+    <p>
+        Your Converter provides simple and free online tools for everyday file tasks.
+        Convert PDF files to Excel, turn JPG and PNG images into PDF files, and resize
+        images by width, height, quality, or target file size.
+    </p>
+
 </section>
+
+
+<!-- HOW TO USE -->
+<section class="why-us">
+
+    <h2>How to Use Your Converter</h2>
+
+    <p>
+        Choose the tool you need, select your file, adjust the available options,
+        and download your converted or resized file.
+    </p>
+
+    <p>
+        Our tools are designed to make common file tasks simple and easy to complete
+        on both mobile devices and computers.
+    </p>
+
+</section>
+
+
+<!-- FAQ -->
+<section class="why-us">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Is Your Converter free to use?</h3>
+    <p>
+        Yes. Your Converter provides free online tools for common file conversion
+        and image-related tasks.
+    </p>
+
+    <h3>What tools are available on Your Converter?</h3>
+    <p>
+        Currently, Your Converter offers PDF to Excel, Image to PDF, and Image Resizer
+        tools.
+    </p>
+
+    <h3>Can I use Your Converter on my phone?</h3>
+    <p>
+        Yes. Your Converter is designed to work on mobile phones, tablets, and computers.
+    </p>
+
+    <h3>Do I need to install any software?</h3>
+    <p>
+        No. You can use the available tools directly from your web browser.
+    </p>
+
+    <h3>Are my files stored?</h3>
+    <p>
+        Files selected for conversion are processed by the tools and are not
+        intentionally stored or shared by Your Converter.
+    </p>
+
+</section>
+
+
+<!-- FOOTER -->
 <footer class="footer">
-  <p>© 2026 Your Converter. All rights reserved.</p>
-  <p>Simple tools for your everyday files.</p>
-  <p><a href="#privacy">Privacy Policy</a></p>
-    <p><a href="#terms">Terms of Use</a></p>
+
+    <p>© 2026 Your Converter. All rights reserved.</p>
+
+    <p>Simple tools for your everyday files.</p>
+
+    <p>
+        <a href="#privacy">Privacy Policy</a>
+        |
+        <a href="#terms">Terms of Use</a>
+    </p>
+
 </footer>
-    <section id="privacy" class="why-us">
-  <h2>Privacy Policy</h2>
-  <p>Your Converter respects your privacy. Files selected for conversion are processed by the tools available on this website and are not intentionally stored or shared by us.</p>
-  <p>We may use basic website analytics in the future to understand website usage and improve our services.</p>
-  <p>By using Your Converter, you agree to this Privacy Policy.</p>
+
+
+<!-- PRIVACY POLICY -->
+<section id="privacy" class="why-us">
+
+    <h2>Privacy Policy</h2>
+
+    <p>
+        Your Converter respects your privacy. Files selected for conversion are
+        processed by the tools available on this website and are not intentionally
+        stored or shared by us.
+    </p>
+
+    <p>
+        We may use basic website analytics in the future to understand website
+        usage and improve our services.
+    </p>
+
+    <p>
+        By using Your Converter, you agree to this Privacy Policy.
+    </p>
+
 </section>
-    <section id="terms" class="why-us">
-  <h2>Terms of Use</h2>
-  <p>Your Converter is provided for personal and general file-conversion use.</p>
-  <p>You are responsible for the files you upload and the way you use the converted files.</p>
-  <p>By using Your Converter, you agree to use the website responsibly and lawfully.</p>
+
+
+<!-- TERMS OF USE -->
+<section id="terms" class="why-us">
+
+    <h2>Terms of Use</h2>
+
+    <p>
+        Your Converter is provided for personal and general file-conversion use.
+    </p>
+
+    <p>
+        You are responsible for the files you upload and the way you use the
+        converted files.
+    </p>
+
+    <p>
+        By using Your Converter, you agree to use the website responsibly and lawfully.
+    </p>
+
 </section>
+
 </body>
 </html>
